@@ -1,0 +1,16 @@
+@theme {
+  --color-main: var(--main-color);
+  --color-main-muted: var(--main-muted-color);
+  --color-secondary: var(--secondary-color);
+  --color-background: var(--background-color);
+  --color-background-secondary: var(--background-secondary-color);
+}
+body {
+  background-color: var(--color-background);
+}
+input[type='radio']:checked {
+  background-color: var(--color-main) !important; /* your main color */
+}
+input[type='radio']:checked::before {
+  background-color: var(--color-main) !important; /* your main color */
+}

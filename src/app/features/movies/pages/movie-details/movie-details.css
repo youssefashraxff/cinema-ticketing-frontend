@@ -1,0 +1,6 @@
+.movie-backdrop {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url('https://media.themoviedb.org/t/p/w1000_and_h563_face/ycnO0cjsAROSGJKuMODgRtWsHQw.jpg');
+  background-size: cover;
+  background-position: center;
+}
