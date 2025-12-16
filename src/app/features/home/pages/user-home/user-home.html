@@ -1,0 +1,37 @@
+<section>
+  <div class="relative w-full h-screen overflow-hidden">
+    <!-- Background Video -->
+    <video
+      autoplay
+      [muted]="true"
+      loop
+      playsinline
+      class="absolute inset-0 w-full h-full object-cover scale-125"
+    >
+      <source src="videos/intro.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Dark Overlay -->
+    <div class="absolute inset-0 bg-black/60"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 flex items-center h-full container mx-auto">
+      <div>
+        <img src="prestige-cinema-logo.svg" class="" alt="Prestige Cinemas Logo" />
+        <hr class="border-neutral-500 w-3/4 mt-6" />
+        <!-- <h1 class="text-white text-4xl md:text-6xl font-bold">Book Your Seat</h1> -->
+        <p class="text-gray-300 my-2 text-lg font-light">
+          A refined cinema experience crafted for comfort, clarity, and immersion.
+        </p>
+        <div>
+          <button
+            routerLink="/movies"
+            class="px-4 py-3 cursor-pointer rounded-xl text-white font-bold border border-white hover:bg-white hover:text-black transition"
+          >
+            <i class="fas fa-arrow-right me-1"></i> Discover Movies
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
