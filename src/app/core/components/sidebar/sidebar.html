@@ -1,0 +1,52 @@
+<aside
+  class="fixed left-0 top-0 h-screen w-64 bg-background-secondary border-r border-white/10 flex flex-col"
+>
+  <!-- Logo -->
+  <div class="px-6 py-5 border-b border-white/10 flex justify-center items-center gap-3">
+    <img src="prestige-cinema-logo.svg" class="h-7" alt="Prestige Cinemas Logo" />
+
+    <h1 class="text-main font-bold text-2xl">Admin</h1>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="flex-1 px-4 py-6 space-y-2 text-sm">
+    <!-- Movies -->
+    <a routerLinkActive="!text-main bg-background" routerLink="movies" class="sidebar-item group">
+      <i class="fa-solid fa-film group-hover:text-main transition duration-300"></i>
+      <span class="group-hover:text-main transition duration-300">Movies</span>
+    </a>
+
+    <!-- Showtimes -->
+    <a routerLinkActive="!text-main bg-background" routerLink="shows" class="sidebar-item group">
+      <i class="fa-solid fa-video group-hover:text-main transition duration-300"></i>
+      <span class="group-hover:text-main transition duration-300">Showtimes</span>
+    </a>
+
+    <!-- Halls -->
+    <a routerLinkActive="!text-main bg-background" routerLink="halls" class="sidebar-item group">
+      <i class="fa-solid fa-door-closed group-hover:text-main transition duration-300"></i>
+      <span class="group-hover:text-main transition duration-300">Halls</span>
+    </a>
+
+    <!-- Bookings -->
+    <a routerLinkActive="!text-main bg-background" routerLink="bookings" class="sidebar-item group">
+      <i class="fa-solid fa-ticket group-hover:text-main transition duration-300"></i>
+      <span class="group-hover:text-main transition duration-300">Bookings</span>
+    </a>
+
+    <!-- Users -->
+    <a routerLinkActive="!text-main bg-background" routerLink="users" class="sidebar-item group">
+      <i class="fa-solid fa-users group-hover:text-main transition duration-300"></i>
+      <span class="group-hover:text-main transition duration-300">Users</span>
+    </a>
+  </nav>
+
+  <!-- Footer -->
+  <div class="px-6 py-4 border-t border-white/10">
+    <button
+      class="w-full py-2 text-sm font-medium text-white bg-main rounded-lg hover:bg-main-muted transition cursor-pointer"
+    >
+      Logout
+    </button>
+  </div>
+</aside>

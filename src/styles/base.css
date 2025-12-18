@@ -8,3 +8,7 @@
 .occupied-seat {
   @apply bg-gray-400 w-6 h-6 rounded-full cursor-not-allowed;
 }
+.sidebar-item {
+  @apply flex items-center gap-3 px-4 py-2 rounded-lg text-white cursor-pointer text-xl font-semibold transition duration-300
+       hover:bg-background;
+}

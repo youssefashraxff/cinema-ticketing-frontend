@@ -1,52 +1,15 @@
+@if (movies$ | async; as movies) {
 <section class="py-32">
   <div class="container md:max-w-5xl md:px-0 px-10 mx-auto">
-    <div>
-      <div class="title">
-        <h2 class="text-2xl text-white font-extrabold uppercase mb-6">Now Screening</h2>
-      </div>
-      <!-- Movies List -->
-      <div class="grid md:grid-cols-4 gap-7">
-        <!-- Movie Card -->
-        <div class="col-span-1 flex flex-col gap-2">
-          <div class="relative group cursor-pointer overflow-hidden">
-            <div class="relative">
-              <img
-                class="group-hover:scale-105 transition duration-500"
-                src="https://www.themoviedb.org/t/p/w1280/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg"
-                alt=""
-              />
-              <div class="absolute inset-0 flex flex-col justify-start items-end">
-                <p
-                  class="w-10 h-10 flex items-center justify-center text-white font-bold text-sm bg-black/60 rounded-full m-3"
-                >
-                  +12
-                </p>
-              </div>
-            </div>
-            <div
-              class="p-3 absolute inset-0 bg-black/60 flex flex-col justify-end gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            >
-              <div class="flex flex-col gap-3 uppercase">
-                <p class="text-white font-bold text-sm">
-                  Language: <span class="font-light">English</span>
-                </p>
-                <p class="text-white font-bold text-sm">
-                  Duration: <span class="font-light">180 min</span>
-                </p>
-                <p class="text-white font-bold text-sm">
-                  Genre: <span class="font-light">Drama</span>
-                </p>
-              </div>
-              <button
-                class="rounded-sm uppercase text-white bg-main py-2 px-6 cursor-pointer hover:bg-main-muted text-sm font-extrabold"
-              >
-                Book now
-              </button>
-            </div>
-          </div>
-          <p class="text-white font-bold text-xl">Oppenheimer</p>
-        </div>
-      </div>
+    <h2 class="text-2xl text-white font-extrabold uppercase mb-6">Now Screening</h2>
+
+    <div class="grid md:grid-cols-4 gap-7">
+      @for (movie of movies; track movie.movieId) {
+      <app-movie-card [movie]="movie" />
+      }
     </div>
   </div>
 </section>
+} @else {
+<app-loading-spinner />
+}
