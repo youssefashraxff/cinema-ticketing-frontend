@@ -1,5 +1,5 @@
-<nav class="bg-background-secondary/50 fixed w-full z-20 top-0 start-0 py-5 backdrop-blur-md">
-  <div class="max-w-screen-xl flex flex-wrap items-center justify-center mx-auto p-4 gap-20">
+<nav class="bg-background-secondary/50 fixed w-full z-20 top-0 start-0 py-2 backdrop-blur-md">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 gap-20">
     <a routerLink="home" class="flex items-center space-x-3">
       <img src="prestige-cinema-logo.svg" class="h-7" alt="Prestige Cinemas Logo" />
     </a>
@@ -30,13 +30,13 @@
     </button>
     <div class="hidden w-full md:block md:w-auto" id="navbar-default">
       <ul
-        class="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0"
+        class="font-semibold text-sm flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0"
       >
         <li>
           <a
             routerLink="home"
             routerLinkActive="!text-gray-400"
-            class="block py-2 px-3 text-white rounded md:p-0 uppercase font-extrabold hover:text-gray-400"
+            class="block py-2 px-3 text-white rounded md:p-0 uppercase hover:text-gray-400"
             >Home</a
           >
         </li>
@@ -44,7 +44,7 @@
           <a
             routerLink="movies"
             routerLinkActive="!text-gray-400"
-            class="block py-2 px-3 text-white rounded md:p-0 uppercase font-extrabold hover:text-gray-400"
+            class="block py-2 px-3 text-white rounded md:p-0 uppercase hover:text-gray-400"
             >Movies</a
           >
         </li>
@@ -52,11 +52,70 @@
           <a
             routerLink="profile"
             routerLinkActive="!text-gray-400"
-            class="block py-2 px-3 text-white rounded md:p-0 uppercase font-extrabold hover:text-gray-400"
+            class="block py-2 px-3 text-white rounded md:p-0 uppercase hover:text-gray-400"
             >My Pruchases</a
           >
         </li>
       </ul>
+    </div>
+    <!-- Auth Actions -->
+    <div class="flex items-center gap-4">
+      @if (!isLoggedIn()) {
+      <a
+        routerLink="/auth"
+        class="px-4 py-2 text-sm font-bold text-white uppercase hover:text-gray-400"
+      >
+        Login
+      </a>
+
+      <a
+        routerLink="/auth/register"
+        class="px-4 py-2 text-sm font-bold uppercase bg-main text-black rounded-lg hover:bg-main-muted"
+      >
+        Sign Up
+      </a>
+      } @if (isLoggedIn()) {
+      <!-- Profile Dropdown -->
+      <div class="relative">
+        <button
+          type="button"
+          class="flex items-center gap-2 px-4 py-2 text-md font-extrabold text-white hover:text-gray-400 cursor-pointer border border-gray-800 rounded-md"
+          (click)="toggleProfileMenu()"
+        >
+          <span class="">Hello,</span>
+          <span class="capitalize font-medium">{{ getUsernme() }}</span>
+          <i class="fa-solid fa-chevron-down text-sm"></i>
+        </button>
+
+        @if (isProfileMenuOpen) {
+        <div
+          class="absolute right-0 mt-2 w-40 bg-background-secondary rounded-lg shadow-lg border border-gray-700 overflow-hidden"
+        >
+          <ul class="py-2 text-sm text-white">
+            <li>
+              <a
+                routerLink="/profile"
+                class="block px-4 py-2 hover:bg-background cursor-pointer"
+                (click)="closeProfileMenu()"
+              >
+                <i class="fa-solid fa-user me-2"></i>Profile
+              </a>
+            </li>
+
+            <li>
+              <button
+                class="w-full text-left px-4 py-2 text-red-400 hover:bg-background cursor-pointer"
+                (click)="logout()"
+              >
+                <i class="fa-solid fa-right-from-bracket mr-2"></i>
+                Logout
+              </button>
+            </li>
+          </ul>
+        </div>
+        }
+      </div>
+      }
     </div>
   </div>
 </nav>

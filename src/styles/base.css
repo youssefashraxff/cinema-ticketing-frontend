@@ -1,6 +1,8 @@
 .seat {
-  @apply w-6 h-6 rounded-full border-2 border-main cursor-pointer
-           hover:scale-110 hover:bg-main transition;
+  @apply w-6 h-6 rounded-full border-2;
+}
+.available-seat {
+  @apply border-main hover:scale-110 hover:bg-main transition cursor-pointer;
 }
 .selected-seat {
   @apply bg-main w-6 h-6 rounded-full;

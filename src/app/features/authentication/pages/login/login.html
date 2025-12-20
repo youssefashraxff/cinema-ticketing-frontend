@@ -1,43 +1,80 @@
-<section class="py-32">
-  <div class="container md:max-w-5xl md:px-0 px-10 mx-auto">
-    <div
-      class="flex flex-col justify-center items-center bg-background-secondary p-8 rounded-lg shadow-lg max-w-2xl mx-auto"
+<section class="">
+  <div class="relative w-full h-screen overflow-hidden">
+    <!-- Background Video -->
+    <video
+      autoplay
+      [muted]="true"
+      loop
+      playsinline
+      class="absolute inset-0 w-full h-full object-cover scale-125"
     >
-      <div class="title">
-        <h2 class="text-2xl text-white font-extrabold uppercase mb-6">Login to your account</h2>
-      </div>
-      <form class="w-full flex flex-col justify-center items-center">
-        <div class="mb-6 w-full">
-          <label for="email" class="block mb-2 text-sm font-medium text-white">Email address</label>
-          <input
-            type="email"
-            id="email"
-            class="bg-background border border-gray-600 text-white placeholder-gray-400 text-sm rounded-lg focus:ring-main focus:border-main block w-full p-2.5"
-            placeholder="john.doe@company.com"
-            required
-          />
+      <source src="videos/intro.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Dark Overlay -->
+    <div class="absolute inset-0 bg-black/85"></div>
+    <!-- Content -->
+    <div class="relative z-5 flex flex-col justify-center items-center min-h-screen mx-auto">
+      <div
+        class="flex flex-col justify-center items-center bg-background-secondary/50 p-8 md:p-16 w-4/5 md:max-w-2xl md:min-w-xl rounded-lg shadow-lg mx-auto backdrop-blur-md"
+      >
+        <div class="title">
+          <h2 class="text-2xl text-white font-extrabold uppercase mb-6">Login to your account</h2>
         </div>
-        <div class="mb-6 w-full">
-          <label for="password" class="block mb-2 text-sm font-medium text-white">Password</label>
-          <input
-            type="password"
-            id="password"
-            class="bg-background border border-gray-600 text-white placeholder-gray-400 text-sm rounded-lg focus:ring-main focus:border-main block w-full p-2.5"
-            placeholder="•••••••••"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          class="cursor-pointer text-white bg-main hover:bg-main-muted focus:ring-4 focus:outline-none focus:ring-main font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+        <form
+          [formGroup]="loginFrom"
+          (ngSubmit)="onSubmit()"
+          class="w-full flex flex-col justify-center items-center"
         >
-          Login
-        </button>
-        <p class="text-sm font-light text-gray-400 mt-4">
-          Don't have an account?
-          <a routerLink="/auth/register" class="font-medium text-main hover:underline">Register</a>
-        </p>
-      </form>
+          <div class="mb-6 w-full">
+            <label for="email" class="block mb-2 text-sm font-medium text-white"
+              >Email Address</label
+            >
+            <input
+              formControlName="email"
+              type="email"
+              id="email"
+              class="bg-background border border-gray-600 text-white placeholder-gray-400 text-sm rounded-lg focus:ring-main focus:border-main block w-full p-2.5"
+              placeholder="e.g.: youssefashraf@example.com"
+              required
+            />
+          </div>
+          <div class="mb-6 w-full">
+            <label for="password" class="block mb-2 text-sm font-medium text-white">Password</label>
+            <input
+              formControlName="password"
+              type="password"
+              id="password"
+              class="bg-background border border-gray-600 text-white placeholder-gray-400 text-sm rounded-lg focus:ring-main focus:border-main block w-full p-2.5"
+              placeholder="Enter your paasword"
+              required
+            />
+          </div>
+          <button
+            [disabled]="isLoading"
+            class="disabled:bg-gray-500 disabled:cursor-auto mt-5 cursor-pointer text-white bg-main hover:bg-main-muted focus:ring-4 focus:outline-none focus:ring-main font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+          >
+            Login @if(isLoading){
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            }
+          </button>
+          <p class="text-sm font-light text-gray-400 mt-4">
+            Don't have an account?
+            <a routerLink="/auth/register" class="font-medium text-main hover:underline"
+              >Register</a
+            >
+          </p>
+          @if(errorMessage){
+          <div class="mt-5 bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
+            <p>{{ errorMessage }}</p>
+          </div>
+          } @if(successMessage){
+          <div class="mt-5 bg-green-100 border-green-500 text-green-700 p-4" role="alert">
+            <p>{{ successMessage }}</p>
+          </div>
+          }
+        </form>
+      </div>
     </div>
   </div>
 </section>

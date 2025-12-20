@@ -1,10 +1,12 @@
 import { Routes } from '@angular/router';
 import { CustomerLayout } from './core/layouts/customer-layout/customer-layout';
 import { AdminLayout } from './core/layouts/admin-layout/admin-layout';
+import { adminGuard } from './core/guards/adminGuard';
 
 export const routes: Routes = [
   {
     path: 'admin',
+    canActivate: [adminGuard],
     component: AdminLayout,
     loadChildren: () => import('./features/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
   },
@@ -12,10 +14,6 @@ export const routes: Routes = [
     path: '',
     component: CustomerLayout,
     children: [
-      {
-        path: 'admin',
-        loadChildren: () => import('./features/home/home.routes').then((m) => m.HOME_ROUTES),
-      },
       {
         path: '',
         loadChildren: () => import('./features/home/home.routes').then((m) => m.HOME_ROUTES),

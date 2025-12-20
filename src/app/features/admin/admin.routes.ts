@@ -29,18 +29,4 @@ export const ADMIN_ROUTES: Routes = [
         (m) => m.HallsManagement
       ),
   },
-  {
-    path: 'bookings',
-    loadComponent: () =>
-      import('../admin/bookings-management/pages/bookings-management/bookings-management').then(
-        (m) => m.BookingsManagement
-      ),
-  },
-  {
-    path: 'users',
-    loadComponent: () =>
-      import('../admin/users-management/pages/users-management/users-management').then(
-        (m) => m.UsersManagement
-      ),
-  },
 ];

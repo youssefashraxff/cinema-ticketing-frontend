@@ -13,6 +13,8 @@ export const API_KEYS = {
   getMovieById: (id: number) => `${environments.API_URL}movies/${id}`,
   deleteMovie: (id: number) => `${environments.API_URL}movies/${id}`,
 
+  getMovieByName: (name: string) => `${environments.API_URL}movies/search/name?name=${name}`,
+
   getMoviesByCategory: (type: string) => `${environments.API_URL}movies/category?type=${type}`,
 
   searchMoviesByLanguage: (language: string) =>
@@ -31,6 +33,7 @@ export const API_KEYS = {
   getShowsByMovie: (movieId: number) => `${environments.API_URL}shows/movie/${movieId}`,
 
   getShowsByHall: (hallId: number) => `${environments.API_URL}shows/hall/${hallId}`,
+  getShowById: (id: number) => `${environments.API_URL}shows/${id}`,
 
   assignShowToHall: `${environments.API_URL}shows/assign/hall`,
   assignMovieToShow: `${environments.API_URL}shows/assign/movie`,
@@ -51,8 +54,7 @@ export const API_KEYS = {
 
   cancelBooking: (id: number) => `${environments.API_URL}bookings/cancel/${id}`,
 
-  getRemainingSeats: (showId: number) =>
-    `${environments.API_URL}bookings/remaining-seats/${showId}`,
+  getRemainingSeats: (showId: number) => `${environments.API_URL}shows/${showId}/seats`,
 
   /*  REVIEWS  */
   addReview: `${environments.API_URL}reviews`,

@@ -7,141 +7,65 @@
       <h1 class="text-white uppercase font-light tracking-widest text-xl">Screen</h1>
       <!-- Seats -->
       <div class="my-5">
+        @if (availableSeats$ | async; as availableSeats) {
         <div class="flex flex-col gap-4 items-center">
-          <!-- Row A -->
+          @for (row of ['A','B','C','D','E']; track row) {
           <div class="flex items-center">
-            <span class="w-6 mr-3 text-gray-400 font-semibold">A</span>
+            <span class="w-6 mr-3 text-gray-400 font-semibold">{{ row }}</span>
+
             <div class="flex gap-3">
               <!-- Group 1 (2 seats) -->
               <div class="flex gap-2">
-                <div class="seat"></div>
-                <div class="seat"></div>
+                @for (seat of [1,2]; track seat) {
+                <div
+                  class="seat"
+                  [class.available-seat]="isSeatAvailable(row, seat, availableSeats)"
+                  [class.occupied-seat]="!isSeatAvailable(row, seat, availableSeats)"
+                  [class.selected-seat]="isSeatSelected(row, seat)"
+                  (click)="toggleSeat(row, seat, availableSeats)"
+                ></div>
+                }
               </div>
 
               <!-- Group 2 (4 seats) -->
               <div class="flex gap-2 mx-4">
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
+                @for (seat of [3,4,5,6]; track seat) {
+                <div
+                  class="seat"
+                  [class.available-seat]="isSeatAvailable(row, seat, availableSeats)"
+                  [class.occupied-seat]="!isSeatAvailable(row, seat, availableSeats)"
+                  [class.selected-seat]="isSeatSelected(row, seat)"
+                  (click)="toggleSeat(row, seat, availableSeats)"
+                ></div>
+                }
               </div>
 
               <!-- Group 3 (2 seats) -->
               <div class="flex gap-2">
-                <div class="seat"></div>
-                <div class="seat"></div>
+                @for (seat of [7,8]; track seat) {
+                <div
+                  class="seat"
+                  [class.available-seat]="isSeatAvailable(row, seat, availableSeats)"
+                  [class.occupied-seat]="!isSeatAvailable(row, seat, availableSeats)"
+                  [class.selected-seat]="isSeatSelected(row, seat)"
+                  (click)="toggleSeat(row, seat, availableSeats)"
+                ></div>
+                }
               </div>
             </div>
           </div>
-          <!-- Row B -->
-          <div class="flex items-center">
-            <span class="w-6 mr-3 text-gray-400 font-semibold">B</span>
-            <div class="flex gap-3">
-              <!-- Group 1 (2 seats) -->
-              <div class="flex gap-2">
-                <div class="seat"></div>
-                <div class="seat"></div>
-              </div>
-
-              <!-- Group 2 (4 seats) -->
-              <div class="flex gap-2 mx-4">
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-              </div>
-
-              <!-- Group 3 (2 seats) -->
-              <div class="flex gap-2">
-                <div class="seat"></div>
-                <div class="seat"></div>
-              </div>
-            </div>
-          </div>
-          <!-- Row C -->
-          <div class="flex items-center">
-            <span class="w-6 mr-3 text-gray-400 font-semibold">C</span>
-            <div class="flex gap-3">
-              <!-- Group 1 (2 seats) -->
-              <div class="flex gap-2">
-                <div class="seat"></div>
-                <div class="seat"></div>
-              </div>
-
-              <!-- Group 2 (4 seats) -->
-              <div class="flex gap-2 mx-4">
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-              </div>
-
-              <!-- Group 3 (2 seats) -->
-              <div class="flex gap-2">
-                <div class="seat"></div>
-                <div class="seat"></div>
-              </div>
-            </div>
-          </div>
-          <!-- Row D -->
-          <div class="flex items-center">
-            <span class="w-6 mr-3 text-gray-400 font-semibold">D</span>
-            <div class="flex gap-3">
-              <!-- Group 1 (2 seats) -->
-              <div class="flex gap-2">
-                <div class="seat"></div>
-                <div class="seat"></div>
-              </div>
-
-              <!-- Group 2 (4 seats) -->
-              <div class="flex gap-2 mx-4">
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-              </div>
-
-              <!-- Group 3 (2 seats) -->
-              <div class="flex gap-2">
-                <div class="seat"></div>
-                <div class="seat"></div>
-              </div>
-            </div>
-          </div>
-          <!-- Row E -->
-          <div class="flex items-center">
-            <span class="w-6 mr-3 text-gray-400 font-semibold">E</span>
-            <div class="flex gap-3">
-              <!-- Group 1 (2 seats) -->
-              <div class="flex gap-2">
-                <div class="seat"></div>
-                <div class="seat"></div>
-              </div>
-
-              <!-- Group 2 (4 seats) -->
-              <div class="flex gap-2 mx-4">
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-              </div>
-
-              <!-- Group 3 (2 seats) -->
-              <div class="flex gap-2">
-                <div class="seat"></div>
-                <div class="seat"></div>
-              </div>
-            </div>
-          </div>
-          <!-- Copy for B → E, just change the letter -->
+          }
         </div>
+        } @else {
+        <app-loading-spinner />
+        }
       </div>
     </div>
     <!-- Seat Legend -->
     <div class="flex justify-center gap-8 my-8 text-sm text-gray-300">
       <!-- Available -->
       <div class="flex items-center gap-2">
-        <div class="seat"></div>
+        <div class="seat border-main"></div>
         <span>Available</span>
       </div>
 
@@ -168,9 +92,11 @@
         <div>
           <p class="text-gray-400 text-sm mb-2">Selected seats</p>
           <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1 rounded-full bg-main text-black text-sm font-medium"> A3 </span>
-            <span class="px-3 py-1 rounded-full bg-main text-black text-sm font-medium"> A4 </span>
-            <span class="px-3 py-1 rounded-full bg-main text-black text-sm font-medium"> B5 </span>
+            @for (seat of selectedSeats; track seat.seatId) {
+            <span class="px-3 py-1 rounded-full bg-main text-black text-sm font-medium">
+              {{ seat.seatId }}
+            </span>
+            }
           </div>
         </div>
 
@@ -248,7 +174,7 @@
         <!-- Total -->
         <div class="flex justify-between font-semibold text-base">
           <span class="text-white">Total</span>
-          <span class="text-main">EGP 150</span>
+          <span class="text-main">{{ totalPrice | currency : ' EGP' }}</span>
         </div>
 
         <!-- CTA -->

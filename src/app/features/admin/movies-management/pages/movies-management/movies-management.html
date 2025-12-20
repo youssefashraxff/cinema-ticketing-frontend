@@ -1,1 +1,156 @@
+@if(allMovies$ | async; as allMovies){
+<section class="p-6">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-white">Movies Management</h2>
 
+    <button
+      class="bg-main hover:bg-main-muted text-black font-medium px-4 py-2 rounded-lg"
+      (click)="openCreateMovieModal()"
+    >
+      + Add Movie
+    </button>
+  </div>
+
+  <!-- Movies Table -->
+  <div class="overflow-x-auto rounded-lg">
+    <table class="w-full text-sm text-left text-gray-300">
+      <thead class="text-xs uppercase bg-background-secondary text-gray-400">
+        <tr>
+          <th class="px-4 py-3">Title</th>
+          <th class="px-4 py-3">Genre</th>
+          <th class="px-4 py-3">Duration</th>
+          <th class="px-4 py-3">Language</th>
+          <th class="px-4 py-3">Rating</th>
+
+          <th class="px-4 py-3 text-center">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (movie of allMovies; track movie.movieId) {
+        <tr class="border-b border-gray-700 hover:bg-background-secondary/50">
+          <td class="px-4 py-3 font-medium text-white">
+            {{ movie.name }}
+          </td>
+
+          <td class="px-4 py-3 capitalize">
+            {{ movie.type }}
+          </td>
+
+          <td class="px-4 py-3">{{ movie.duration }} min</td>
+
+          <td class="px-4 py-3">
+            {{ movie.language }}
+          </td>
+
+          <td class="px-4 py-3">⭐ {{ movie.rating }}</td>
+
+          <!-- Actions -->
+          <td class="px-4 py-3 flex gap-2 justify-center">
+            <button class="text-blue-400 hover:text-blue-300" title="Edit">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+
+            <!-- <button
+              class="text-yellow-400 hover:text-yellow-300"
+              (click)="toggleStatus(movie)"
+              title="Toggle Status"
+            >
+              <i class="fa-solid fa-power-off"></i>
+            </button> -->
+
+            <button class="text-red-400 hover:text-red-300" title="Delete">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        } @if (allMovies.length === 0) {
+        <tr>
+          <td colspan="7" class="text-center py-6 text-gray-400">No movies found</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Create Movie Modal -->
+@if (isCreateMovieOpen) {
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+  <div class="bg-background-secondary rounded-xl w-full max-w-lg p-6">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-semibold text-white">Create Movie</h3>
+      <button class="text-gray-400 hover:text-white" (click)="closeCreateMovieModal()">✕</button>
+    </div>
+
+    <!-- Form -->
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm text-gray-300 mb-1">Movie Name</label>
+        <input
+          type="text"
+          class="w-full bg-background border border-gray-600 rounded-lg p-2.5 text-white"
+          placeholder="Movie title"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-300 mb-1">Genre</label>
+        <input
+          type="text"
+          class="w-full bg-background border border-gray-600 rounded-lg p-2.5 text-white"
+          placeholder="Action, Drama..."
+        />
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm text-gray-300 mb-1">Duration (min)</label>
+          <input
+            type="number"
+            class="w-full bg-background border border-gray-600 rounded-lg p-2.5 text-white"
+            placeholder="120"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm text-gray-300 mb-1">Language</label>
+          <input
+            type="text"
+            class="w-full bg-background border border-gray-600 rounded-lg p-2.5 text-white"
+            placeholder="English"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-300 mb-1">Rating</label>
+        <input
+          type="number"
+          step="0.1"
+          max="10"
+          class="w-full bg-background border border-gray-600 rounded-lg p-2.5 text-white"
+          placeholder="8.5"
+        />
+      </div>
+
+      <!-- Actions -->
+      <div class="flex justify-end gap-3 pt-4">
+        <button
+          type="button"
+          class="px-4 py-2 rounded-lg bg-gray-600 text-white"
+          (click)="closeCreateMovieModal()"
+        >
+          Cancel
+        </button>
+
+        <button type="submit" class="px-4 py-2 rounded-lg bg-main text-black hover:bg-main-muted">
+          Create
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+} }
