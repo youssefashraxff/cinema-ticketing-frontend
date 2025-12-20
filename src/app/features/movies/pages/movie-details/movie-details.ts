@@ -1,25 +1,43 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MoviesService } from '../../services/movies.service';
-import { map, switchMap } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { LoadingSpinner } from '../../../../shared/loading-spinner/loading-spinner';
 import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import { IShowsResponse } from '../../interfaces/IShowsResponse';
+import { ReviewService } from '../../services/review.service';
+import { IReviewResponse } from '../../interfaces/IReviewResponse';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.html',
   styleUrl: './movie-details.css',
-  imports: [LoadingSpinner, AsyncPipe, DatePipe, RouterLink, NgClass],
+  imports: [LoadingSpinner, AsyncPipe, DatePipe, RouterLink, NgClass, FormsModule],
 })
 export class MovieDetails {
   selectedDay!: string;
   private readonly moviesService = inject(MoviesService);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly reviewService = inject(ReviewService);
+  private readonly router = inject(Router);
+
+  rating!: number;
+  comment: string = '';
+  reviews$!: Observable<IReviewResponse[]>;
+  movieSnapshot: any;
 
   movie$ = this.activatedRoute.paramMap.pipe(
     map((params) => Number(params.get('id'))),
-    switchMap((id) => this.moviesService.getMovieDetails(id))
+    switchMap((id) =>
+      this.moviesService.getMovieDetails(id).pipe(
+        map((movie) => {
+          this.reviews$ = this.reviewService.getMovieReviews(movie.name);
+          this.movieSnapshot = movie;
+          return movie;
+        })
+      )
+    )
   );
   shows$ = this.activatedRoute.paramMap.pipe(
     map((param) => Number(param.get('id'))),
@@ -76,5 +94,24 @@ export class MovieDetails {
       });
 
     return Array.from(hallsMap.values());
+  }
+
+  submitReview(): void {
+    if (!this.rating || !this.comment) return;
+
+    const customerId = Number(localStorage.getItem('userId'));
+
+    this.reviewService
+      .addReview({
+        movieName: this.movieSnapshot?.name,
+        userId: customerId.toString(),
+        rating: this.rating,
+        comment: this.comment,
+      })
+      .subscribe(() => {
+        this.comment = '';
+        this.rating = undefined!;
+        this.reviews$ = this.reviewService.getMovieReviews(this.movieSnapshot.name);
+      });
   }
 }

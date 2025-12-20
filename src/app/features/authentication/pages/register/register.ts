@@ -86,6 +86,7 @@ export class Register implements OnInit {
     console.log(response);
     localStorage.setItem('token', response.token);
     localStorage.setItem('role', response.user.role);
+    localStorage.setItem('username', response.user.username);
     localStorage.setItem('userId', response.user.id.toString());
     this.registerForm.reset();
     this.errorMessage = undefined;
