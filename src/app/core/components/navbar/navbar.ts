@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { FlowbiteService } from '../../services/flowbite.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,8 +8,9 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar {
+export class Navbar implements AfterViewInit {
   private readonly router = inject(Router);
+  private readonly flowbiteService = inject(FlowbiteService);
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
@@ -37,5 +39,10 @@ export class Navbar {
 
   closeProfileMenu() {
     this.isProfileMenuOpen = false;
+  }
+  ngAfterViewInit() {
+    this.flowbiteService.loadFlowbite((flowbite) => {
+      flowbite.initFlowbite();
+    });
   }
 }

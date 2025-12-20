@@ -56,6 +56,11 @@ export const API_KEYS = {
 
   getRemainingSeats: (showId: number) => `${environments.API_URL}shows/${showId}/seats`,
 
+  /*  PAYMENTS  */
+  payByCash: `${environments.API_URL}payments/cash`,
+  payByCard: `${environments.API_URL}payments/card`,
+  payByPaypal: `${environments.API_URL}payments/paypal`,
+
   /*  REVIEWS  */
   addReview: `${environments.API_URL}reviews`,
   getMovieReviews: (movieName: string) =>

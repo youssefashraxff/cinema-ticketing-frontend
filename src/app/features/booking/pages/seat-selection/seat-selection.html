@@ -104,50 +104,110 @@
         <hr class="border-neutral-700" />
 
         <!-- Ticket Details -->
+        @if(show$ | async; as show) {
         <div class="space-y-2 text-sm text-gray-300">
           <div class="flex justify-between">
             <span>Movie</span>
-            <span class="text-white font-medium">Dune: Part Two</span>
+            <span class="text-white font-medium">{{ show.movie.name }}</span>
           </div>
 
           <div class="flex justify-between">
             <span>Date</span>
-            <span class="text-white font-medium">15 Dec 2025</span>
+            <span class="text-white font-medium">{{ show.startTime | date : 'dd MMM yyyy' }}</span>
           </div>
 
           <div class="flex justify-between">
             <span>Time</span>
-            <span class="text-white font-medium">12:00 AM</span>
+            <span class="text-white font-medium">{{ show.startTime | date : 'shortTime' }}</span>
           </div>
 
           <div class="flex justify-between">
             <span>Hall</span>
-            <span class="text-white font-medium">Hall 3</span>
+            <span class="text-white font-medium">{{ show.hall.hallId }}</span>
           </div>
         </div>
+        }
 
         <!-- Payment Options -->
-        <div class="space-y-3">
+        <form [formGroup]="paymentForm" class="space-y-3">
           <p class="text-gray-400 text-sm">Payment method</p>
 
-          <!-- Visa -->
+          <!-- Credit Card -->
           <div
             class="flex items-center justify-between p-3 rounded-lg border border-neutral-700 hover:border-main transition"
           >
             <div class="flex items-center gap-3">
               <input
                 type="radio"
-                id="visa"
+                id="card"
                 name="payment"
+                value="CARD"
                 class="accent-main cursor-pointer z-10"
+                [(ngModel)]="selectedPayment"
                 checked
               />
-              <label for="visa" class="text-white font-medium cursor-pointer">
-                Visa / MasterCard
+              <label for="card" class="text-white font-medium cursor-pointer">
+                Credit / Debit Card
               </label>
             </div>
             <i class="fa-brands fa-cc-visa text-2xl text-white"></i>
           </div>
+          @if (selectedPayment === 'CARD') {
+          <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              type="text"
+              formControlName="cardNumber"
+              placeholder="Card Number"
+              class="bg-background border border-gray-600 text-white rounded-lg p-2.5"
+            />
+            <input
+              type="text"
+              formControlName="cardHolder"
+              placeholder="Card Holder Name"
+              class="bg-background border border-gray-600 text-white rounded-lg p-2.5"
+            />
+            <input
+              type="text"
+              formControlName="expiry"
+              placeholder="Expiry Date (MM/YY)"
+              class="bg-background border border-gray-600 text-white rounded-lg p-2.5"
+            />
+            <input
+              type="password"
+              formControlName="cvv"
+              placeholder="CVV"
+              class="bg-background border border-gray-600 text-white rounded-lg p-2.5"
+            />
+          </div>
+          }
+
+          <!-- PayPal -->
+          <div
+            class="flex items-center justify-between p-3 rounded-lg border border-neutral-700 hover:border-main transition"
+          >
+            <div class="flex items-center gap-3">
+              <input
+                type="radio"
+                id="paypal"
+                name="payment"
+                value="PAYPAL"
+                class="accent-main cursor-pointer z-10"
+                [(ngModel)]="selectedPayment"
+              />
+              <label for="paypal" class="text-white font-medium cursor-pointer"> PayPal </label>
+            </div>
+            <i class="fa-brands fa-paypal text-2xl text-white"></i>
+          </div>
+          @if (selectedPayment === 'PAYPAL') {
+          <div class="mt-4">
+            <input
+              type="email"
+              formControlName="paypalEmail"
+              placeholder="PayPal Email"
+              class="bg-background border border-gray-600 text-white rounded-lg p-2.5 w-full"
+            />
+          </div>
+          }
 
           <!-- Cash -->
           <div
@@ -158,7 +218,9 @@
                 type="radio"
                 id="cash"
                 name="payment"
+                value="CASH"
                 class="accent-main cursor-pointer z-10"
+                [(ngModel)]="selectedPayment"
               />
               <label for="cash" class="text-white font-medium cursor-pointer">
                 Cash at Cinema
@@ -166,7 +228,7 @@
             </div>
             <i class="fa-solid fa-money-bill-1 text-xl text-white"></i>
           </div>
-        </div>
+        </form>
 
         <!-- Divider -->
         <hr class="border-neutral-700" />
@@ -180,6 +242,7 @@
         <!-- CTA -->
         <button
           class="w-full py-3 rounded-xl bg-main text-white cursor-pointer font-bold hover:bg-main-muted transition"
+          (click)="confirmPayment()"
         >
           Confirm booking
         </button>

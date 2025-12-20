@@ -44,47 +44,62 @@
     </div>
   </div>
 
-  <!-- Showtimes -->
-  <div class="my-5">
+  <!-- Showdays & Showtimes -->
+  <div class="my-10">
     <div class="container max-w-6xl mx-auto">
-      <!-- Showdays -->
       <h2 class="text-2xl text-white font-extrabold uppercase mb-6">Showdays</h2>
+
       @if (shows$ | async; as shows) {
-      <div class="flex gap-4">
-        @for (show of shows; track show.showId) {
-        <a href="" class="group">
-          <div
-            class="py-3 px-5 rounded-2xl bg-linear-to-br from-neutral-900 to-neutral-800 border border-main shadow-lg flex flex-col justify-center items-center text-center"
-          >
-            <div>
-              <p class="text-main font-semibold text-sm">
-                {{ show.startTime | date : 'EEE' }}
-              </p>
-              <p class="text-main text-lg font-extrabold uppercase">
-                {{ show.startTime | date : 'dd MMM' }}
-              </p>
-            </div>
-          </div>
-        </a>
+
+      <!-- Unique Days -->
+      <div class="flex gap-4 mb-10">
+        @for (day of getUniqueDays(shows); track day) {
+        <div
+          (click)="selectDay(day)"
+          class="py-3 px-5 rounded-2xl cursor-pointer border shadow-lg flex flex-col justify-center items-center text-center transition"
+          [ngClass]="{
+            'border-main bg-linear-to-br from-neutral-900 to-neutral-800':
+              selectedDay === day.toDateString(),
+            'border-gray-700 bg-neutral-900/60 hover:border-main':
+              selectedDay !== day.toDateString()
+          }"
+        >
+          <p class="text-main font-semibold text-sm">
+            {{ day | date : 'EEE' }}
+          </p>
+          <p class="text-main text-lg font-extrabold uppercase">
+            {{ day | date : 'dd MMM' }}
+          </p>
+        </div>
         }
       </div>
-      }
-      <!-- Showtimes -->
-      <div class="my-8">
-        @if (shows$ | async; as shows) { @for (show of shows; track show.showId) {
-        <p class="text-white font-bold text-lg">Hall {{ show.hallId }}</p>
-        <div class="flex gap-3">
-          <a [routerLink]="['/booking', show.showId, 'seats']" class="group">
-            <div class="relative inline-flex items-center justify-center">
-              <i class="fa-solid fa-ticket-simple text-7xl text-white group-hover:text-main"></i>
-              <span class="absolute text-xs font-semibold text-black group-hover:text-white">
-                {{ show.startTime | date : 'shortTime' }}
-              </span>
-            </div>
-          </a>
+
+      <!-- Halls with grouped showtimes -->
+      <div class="flex flex-col gap-8">
+        @for (hall of getShowsGroupedByHall(shows); track hall.hallId) {
+
+        <div>
+          <p class="text-white font-bold text-lg mb-3">Hall {{ hall.hallId }}</p>
+
+          <div class="flex gap-4 flex-wrap">
+            @for (show of hall.shows; track show.showId) {
+            <a [routerLink]="['/booking', show.showId, 'seats']" class="group">
+              <div class="relative inline-flex items-center justify-center">
+                <span
+                  class="bg-white p-2 rounded-md text-xs font-semibold text-black group-hover:bg-white/50"
+                >
+                  {{ show.startTime | date : 'shortTime' }}
+                </span>
+              </div>
+            </a>
+            }
+          </div>
         </div>
-        } }
+
+        }
       </div>
+
+      }
     </div>
   </div>
 </section>

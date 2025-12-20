@@ -1,10 +1,114 @@
 @if (movies$ | async; as movies) {
 <section class="py-32">
   <div class="container md:max-w-5xl md:px-0 px-10 mx-auto">
-    <h2 class="text-2xl text-white font-extrabold uppercase mb-6">Now Screening</h2>
+    <div class="flex justify-between">
+      <h2 class="text-2xl text-white font-extrabold uppercase mb-6">Now Screening</h2>
+      <!-- Search for movie name -->
+      <label
+        for="default-search"
+        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+        >Search</label
+      >
+      <div class="relative">
+        <div class="absolute inset-y-0 start-0 ps-3 pointer-events-none h-12 flex items-center">
+          <i class="fas fa-search text-gray-500"></i>
+        </div>
+        <input
+          [(ngModel)]="searchText"
+          type="text"
+          id="default-search"
+          placeholder="Search for a movie, category, language, description ..."
+          class="bg-background-secondary/50 text-white text-sm rounded-sm ps-12 px-4 w-96 py-0 h-12 border-0 outline-none"
+        />
+      </div>
+    </div>
+    <div class="my-8 flex justify-center items-center">
+      <ul
+        class="font-semibold text-sm flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0"
+      >
+        <li>
+          <button
+            (click)="onCategoryClick('ALL')"
+            class="block py-2 px-3 uppercase cursor-pointer hover:text-main"
+            [ngClass]="{
+              'text-main': activeCategory === 'ALL',
+              'text-white': activeCategory !== 'ALL'
+            }"
+          >
+            All
+          </button>
+        </li>
+
+        <li>
+          <button
+            (click)="onCategoryClick('Drama')"
+            class="block py-2 px-3 uppercase cursor-pointer hover:text-main"
+            [ngClass]="{
+              'text-main': activeCategory === 'Drama',
+              'text-white': activeCategory !== 'Drama'
+            }"
+          >
+            Drama
+          </button>
+        </li>
+
+        <li>
+          <button
+            (click)="onCategoryClick('Comedy')"
+            class="block py-2 px-3 uppercase cursor-pointer hover:text-main"
+            [ngClass]="{
+              'text-main': activeCategory === 'Comedy',
+              'text-white': activeCategory !== 'Comedy'
+            }"
+          >
+            Comedy
+          </button>
+        </li>
+
+        <li>
+          <button
+            (click)="onCategoryClick('Action')"
+            class="block py-2 px-3 uppercase cursor-pointer hover:text-main"
+            [ngClass]="{
+              'text-main': activeCategory === 'Action',
+              'text-white': activeCategory !== 'Action'
+            }"
+          >
+            Action
+          </button>
+        </li>
+
+        <li>
+          <button
+            (click)="onCategoryClick('Romance')"
+            class="block py-2 px-3 uppercase cursor-pointer hover:text-main"
+            [ngClass]="{
+              'text-main': activeCategory === 'Romance',
+              'text-white': activeCategory !== 'Romance'
+            }"
+          >
+            Romance
+          </button>
+        </li>
+
+        <li>
+          <button
+            (click)="onCategoryClick('Mystery')"
+            class="block py-2 px-3 uppercase cursor-pointer hover:text-main"
+            [ngClass]="{
+              'text-main': activeCategory === 'Mystery',
+              'text-white': activeCategory !== 'Mystery'
+            }"
+          >
+            Mystery
+          </button>
+        </li>
+      </ul>
+    </div>
+    <hr class="border-neutral-700 w-3/4 mx-auto mb-10" />
 
     <div class="grid md:grid-cols-4 gap-7">
-      @for (movie of movies; track movie.movieId) {
+      @for (movie of (movies | movieSearch: searchText); track movie.movieId) {
       <app-movie-card [movie]="movie" />
       }
     </div>

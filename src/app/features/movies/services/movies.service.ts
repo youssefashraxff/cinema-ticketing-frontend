@@ -20,4 +20,7 @@ export class MoviesService extends Basehttp {
   getMovieShows(movieId: number) {
     return this.http.get<IShowsResponse[]>(API_KEYS.getShowsByMovie(movieId));
   }
+  getMoviesByCategory(category: string) {
+    return this.http.get<IallMoviesResponse[]>(API_KEYS.getMoviesByCategory(category));
+  }
 }
